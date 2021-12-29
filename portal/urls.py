@@ -15,8 +15,10 @@ urlpatterns = [
     path('index/<str:user>/subjects/', views.view_subjects),
     path('index/<str:user>/dashboard/', views.view_profile),        
     path('index/<str:user>/new/', views.view_lecture),
-    path('index/<str:user>/attendence/', views.view_attendence),
+    path('index/<str:user>/lectures/', views.view_lecture),
+    path('index/<str:user>/lecture/', views.view_lecture),
+    path('index/<str:user>/attendence/', views.view_attendance),
     path('index/<str:user/lectures/', views.view_lecture),
     path('index/<str:user>/profile-edit/', views.edit_profile),
-    path('index/<str:user>/mark-attendence/', views.mark_attendence),    
+    path('index/<str:user>/mark-attendence/', views.mark_attendance),    
 ]

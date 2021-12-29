@@ -173,6 +173,7 @@
             <tbody>
                 {% for lecture in lectures %}
                 <form action="../mark-attendence/" method="POST">
+                    {% csrf_token %}
               <tr>
                 <th scope="row"></th>
                 <input type="hidden" name = "id" value= "{{ lecture.lecture_id }}"></input>
@@ -181,6 +182,7 @@
                 <td>{{ lecture.on_date }}</td>
                 <td>{{ lecture.subject.teacher }}</td>
                 <td>{{ lecture.desc }}</td>
+                {% csrf_token %}
                 <td><button class="btn btn-success" type="submit" formmethod="POST" formtarget="_blank" formaction="../mark-attendence/" >Join</button></td>
                 </form>
               </tr>

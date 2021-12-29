@@ -106,17 +106,17 @@ class Lecture(models.Model):
 
     def __init__(self: models.Model.__init__, *args, **kwargs):
         super().__init__(*args, **kwargs)
-        self.teacher= self.subject.teacher
+        self.teacher= Teacher.objects.get(job_id=Subject.objects.get(subject_id=self.subject).teacher)
 
 
-class Attendence(models.Model):
+class Attendance(models.Model):
 
-    __tablename__ = 'Attendence'
+    __tablename__ = 'Attendance'
 
     lecture = models.ForeignKey(Lecture, on_delete=CASCADE)
     student = models.ForeignKey(Students, on_delete=CASCADE)
     join_at = models.DateTimeField(auto_now=True)
-    attendence = models.BooleanField(default=True)
+    attendance = models.BooleanField(default=True)
     remarks = models.TextField(max_length=50)
 
     def __init__(self: models.Model.__init__, *args, **kwargs):

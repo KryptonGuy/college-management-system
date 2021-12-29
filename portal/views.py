@@ -10,7 +10,7 @@ from django.template import RequestContext
 class Links():
     def __init__(self, user):
         self.profile = '../../' + user + '/profile/'
-        self.attendence = '../../' + user + '/attendence/'
+        self.attendance = '../../' + user + '/attendance/'
         self.lectures = '../../' + user + '/new/'
         self.home = '../../' + user + '/home/'
         self.edit_profile = '../../' + user + '/profile-edit/'
@@ -21,7 +21,7 @@ class Links():
 class Links2():
     def __init__(self, user):
         self.profile = './' + user + '/profile'
-        self.attendence = './' + user + '/attendence'
+        self.attendance = './' + user + '/attendance'
         self.lectures = './' + user + '/lectures'
         self.home = './' + user + '/home'
         self.edit_profile = './' + user + '/profile-edit/'
@@ -38,18 +38,12 @@ def login(request):
     pwd = request.POST.get("paswrd", '')
     if user and pwd:
         try:
-            c0 = Students.objects.filter(prn_no=user,paswrd=pwd)
+            student = Students.objects.get(prn_no=user,paswrd=pwd)
         except:
             messages.success(request, "Something wrong with your username or password")
             return render(request, 'login-page.html')   
 
-        for student in Students.objects.all():
-            if student.f_name == user:
-                break
-            return render(request, 'index.html', context={'link': Links2(user), 'student': student})
-        else:
-            messages.success(request, "Something wrong with your username or password")
-            return render(request, 'login-page.html')
+        return render(request, 'index.html', context={'link': Links2(user), 'student': student})
     else:
         messages.success(request, "Username or password missing")
         return render(request, 'login-page.html')
@@ -87,8 +81,7 @@ def edit_profile(request, user):
         user_obj.f_name = request.POST.get('f_name','')# First name
         user_obj.l_name = request.POST.get('l_name','')# Last name
         #user_obj.gender = request.POST.get('gender','')
-        #user_obj.depart = request.POST.get('depart','')
-        user_obj.comment = request.POST.get('comment', '')
+        #user_obj.depart = request.POST.get('depart','')        user_obj.comment = request.POST.get('comment', '')
 
         user_obj.save()
         messages.success(request, "Edit Student Info Successfully!")
@@ -109,15 +102,14 @@ def view_lecture(request, user):
 
     return render(request, 'lectures.html', context={'link': Links(user), 'lectures': lectures})
 
-def view_attendence(request, user):
-    attend = Attendence.objects.filter(student = user)
-    #attend = list(attend2)
+def view_attendance(request, user):
+    attend = Attendance.objects.filter(student = user)
     link = Links(user)
-    return render(request, 'attendence.html', context= {'attend': attend.reverse(), 'link':link})
+    return render(request, 'attendance.html', context= {'attend': attend.reverse(), 'link':link})
 
-def mark_attendence(request, user):
+def mark_attendance(request, user):
     lec_id = request.POST.get('id')
-    attend = Attendence(lecture= Lecture.objects.get(lecture_id=lec_id) , student= Students.objects.get(prn_no=user))
+    attend = Attendance(lecture= Lecture.objects.get(lecture_id=lec_id) , student= Students.objects.get(prn_no=user))
     attend.save()
     return redirect('https://meet.google.com')
 
