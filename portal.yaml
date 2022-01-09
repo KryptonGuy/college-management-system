@@ -17,7 +17,8 @@ spec:
       containers:
       - name: portal-app
         # Replace  with your project ID or use `make template`
-        image: gcr.io/school-portal-2022/portal
+        image: #replace with your docker image
+      
         # This setting makes nodes pull the docker image every time before
         # starting the pod. This is useful when debugging, but should be turned
         # off in production.

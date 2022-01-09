@@ -26,7 +26,20 @@ SECRET_KEY = os.environ.get('SECRET_KEY', 'tempkey')
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = ['*']
+
+# Adding host from Env
+
+ALLOWED_HOSTS = []
+
+ENV_HOST = os.environ.get('HOST', '*')
+
+HOSTS = ENV_HOST.split(',')
+
+for HOST in HOSTS:
+    ALLOWED_HOSTS.append(HOST)
+
+
+
 
 
 
@@ -80,11 +93,11 @@ WSGI_APPLICATION = 'studentportal.wsgi.application'
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.mysql',
-        'NAME': 'db',
-        'USER': 'root',
-        'PASSWORD': 'password',
-        'HOST': '127.0.0.1',
-        'PORT': '3306'
+        'NAME': os.environ.get('DBNAME', 'db'),
+        'USER': os.environ.get('DBUSER', 'root'),
+        'PASSWORD': os.environ.get('DBPASSWORD', '3306'),
+        'HOST': os.environ.get('DBHOST', '127.0.0.1'),
+        'PORT': os.environ.get('DBPORT', '3306')
     }
 }
 

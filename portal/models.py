@@ -2,15 +2,18 @@ from django.db import models
 from datetime import date
 from django.db.models.deletion import CASCADE
 
-from django.db.models.enums import IntegerChoices
-from django.db.models.fields import AutoField, CharField, IntegerField
-# Create your models here.
+from django.db.models.fields import IntegerField
+
+
+# Choices for genders
 
 GENDER = (
     ('M', 'Male'),
     ('F', 'Female'),
     ('O', 'Others')
 )
+
+#Choices of Departments
 
 DEPARTMENT = (
     ('Computer Science', 'Computer Science'),
@@ -21,6 +24,7 @@ DEPARTMENT = (
 
 # Model for Student Data
 
+# Teacher table model
 
 class Teacher(models.Model):
 
@@ -36,6 +40,7 @@ class Teacher(models.Model):
     def __str__(self):
         return f'{self.f_name} {self.l_name}'
     
+# Model for Department
 
 class Department(models.Model):
 
@@ -52,6 +57,8 @@ class Department(models.Model):
     def __init__(self: models.Model, *args, **kwargs) -> None:
         super().__init__(*args, **kwargs)
         self.id = self.dep_id  
+
+# Model for Studdents
 
 class Students(models.Model):
     
@@ -78,6 +85,7 @@ class Students(models.Model):
         super().__init__(*args, **kwargs)
         self.name = f'{self.f_name} {self.l_name}'
 
+# Model for Subjects
 
 class Subject(models.Model):
 
@@ -91,6 +99,8 @@ class Subject(models.Model):
 
     def __str__(self):
         return f'{self.subject}'
+
+#Model for lectures
 
 class Lecture(models.Model):
 
@@ -108,6 +118,7 @@ class Lecture(models.Model):
         super().__init__(*args, **kwargs)
         self.teacher= Teacher.objects.get(job_id=Subject.objects.get(subject_id=self.subject).teacher)
 
+#Model for Attendance
 
 class Attendance(models.Model):
 
